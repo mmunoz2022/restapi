@@ -24,10 +24,10 @@ public class IMDBServiceImpl implements IMDBService{
 
         List<FilmDTO> films = Arrays.asList(f1, f2, f3, f4, f5, f6);
 
-        films.stream()
+        List<FilmDTO> filteredFilms = films.stream()
                 .filter(f -> f.getFilmDirector().equals(director))
                 .collect(Collectors.toList());
 
-        return new ResponseEntity<List<FilmDTO>>(films, HttpStatus.OK);
+        return new ResponseEntity<List<FilmDTO>>(filteredFilms, HttpStatus.OK);
     }
 }

@@ -15,7 +15,7 @@ import sopra.restapi.services.IMDBService;
 
 import java.util.List;
 
-@RestController("/")
+@RestController
 public class Controller {
 
     @Autowired
