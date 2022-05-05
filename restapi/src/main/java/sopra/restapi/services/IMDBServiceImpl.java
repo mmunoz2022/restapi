@@ -28,6 +28,6 @@ public class IMDBServiceImpl implements IMDBService{
                 .filter(f -> f.getFilmDirector().equals(director))
                 .collect(Collectors.toList());
 
-        return new ResponseEntity<List<String>>(films, HttpStatus.OK);
+        return new ResponseEntity<List<FilmDTO>>(films, HttpStatus.OK);
     }
 }
