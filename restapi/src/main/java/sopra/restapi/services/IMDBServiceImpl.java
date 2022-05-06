@@ -4,8 +4,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import sopra.restapi.dtos.FilmDTO;
+import sopra.restapi.dtos.MessageDTO;
 
-import java.util.ArrayList;
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -29,5 +30,20 @@ public class IMDBServiceImpl implements IMDBService{
                 .collect(Collectors.toList());
 
         return new ResponseEntity<List<FilmDTO>>(filteredFilms, HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<String> netflixMessage(String titulo, String director, String año) {
+        MessageDTO mensaje = new MessageDTO("NETFLIX", LocalDate.now(),titulo+director+año);
+        sendMessage(mensaje);
+
+        return new ResponseEntity<>("OK", HttpStatus.OK);
+    }
+
+    @Override
+    public void sendMessage(MessageDTO mensaje) {
+        System.out.println(mensaje.getCodOrigin());
+        System.out.println(mensaje.getDateSystem());
+        System.out.println(mensaje.getDesMessage());
     }
 }

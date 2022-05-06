@@ -29,4 +29,16 @@ public class Controller {
 
         return  imdbService.getFilmsByDirector(director);
     }
+
+    @Operation(summary = "Emulando el servicio Redsys para Netflix", description = "Servicio Netflix", responses = {
+            @ApiResponse(responseCode = "200", description = "Successful operation", content = @Content(schema = @Schema(implementation = Double.class))),
+            @ApiResponse(responseCode = "400", description = "Invalid station supplied")})
+    @GetMapping("/netflixMessage")
+    public ResponseEntity<String> netflixMessage(
+            @RequestParam(value = "titulo") String titulo,
+            @RequestParam(value = "director") String director,
+            @RequestParam(value = "año") String año) {
+
+        return  imdbService.netflixMessage(titulo, director, año);
+    }
 }
