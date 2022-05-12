@@ -8,7 +8,6 @@ import org.springframework.web.client.RestTemplate;
 import sopra.restapi.dtos.Film;
 import sopra.restapi.repositories.FilmsRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,19 +33,13 @@ public class IMDBServiceImpl implements IMDBService {
                         .map(ResponseEntity::ok)
                         .orElse(handleError(this.EXTERNALAPIERROR)))
                 .orElse(handleError(this.WRONGYEARERROR));
-
     }
 
-
     private List<Film> getFilmsFromExternalIMDBApi(Integer year) {
-
         return filmsRepository.findByYear(year);
-
-
     }
 
     private ResponseEntity<List<Film>> handleError(String error) {
-
         switch (error) {
             case "EXTERNAL API ERROR":
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();

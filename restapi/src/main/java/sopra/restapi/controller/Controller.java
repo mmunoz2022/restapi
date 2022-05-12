@@ -16,6 +16,7 @@ import sopra.restapi.services.IMDBService;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
 
 @RestController
 @RequestMapping("imdb")
@@ -43,16 +44,20 @@ public class Controller {
             @ApiResponse(responseCode = "200", description = "Successful operation"),
             @ApiResponse(responseCode = "400", description = "Invalid film request")})
     @GetMapping("/filmWithHeader")
-    public ResponseEntity<FilmWithHeader> getFilmWithHeader(@RequestParam(value = "film") String film) {
+    public CompletableFuture<ResponseEntity<FilmWithHeader>> getFilmWithHeader(@RequestParam(value = "film") String film) {
 
         return Optional.of(film)
                 .map(addHeaderService::getFilmWithHeader)
-                .map(ResponseEntity::ok)
-                .orElseThrow(RuntimeException::new);
+                .map(result -> result.thenApply(ResponseEntity::ok)
+                        .exceptionally(this::handleError))
+                .orElseGet(() -> CompletableFuture.completedFuture(ResponseEntity.noContent().build()))
+                ;
     }
 
+
+
     private ResponseEntity<FilmWithHeader> handleError(Throwable throwable) {
-        System.out.println("Exception thrown when translating words");
+        System.out.println("Exception thrown in threads");
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
 }

@@ -23,7 +23,7 @@ public class IMBDServiceImplTest {
     RestTemplate restTemplateMock;
 
     @InjectMocks
-    IMDBService imdbService = new IMDBServiceImpl();
+    IMDBService imdbService;
 
 
     @Test
@@ -56,7 +56,7 @@ public class IMBDServiceImplTest {
         Integer year = 2000;
         //WHEN
         when(restTemplateMock.getForObject("url", List.class)).thenReturn(null);
-        ResponseEntity<List<Film>> re = imdbService.getFilmsByYear(year);
+        var re = imdbService.getFilmsByYear(year);
         //THEN
         assertEquals(re.getStatusCode(), HttpStatus.INTERNAL_SERVER_ERROR);
     }

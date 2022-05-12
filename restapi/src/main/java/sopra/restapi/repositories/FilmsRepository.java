@@ -8,7 +8,5 @@ import java.util.List;
 @Repository
 public interface FilmsRepository extends JpaRepository<Film, Long> {
 
-    public List<Film> findByName(String name);
-
     public List<Film> findByYear(int year);
 }

@@ -27,15 +27,19 @@ public class ControllerIntegrationTest {
     public void controllerIntegrationTestOk() throws Exception {
 
         MvcResult result = mockMvc.perform(
-                MockMvcRequestBuilders.get("/imdb/filmsByYear").param("year", "1999")).andExpect(status().isOk()).andReturn();
+                MockMvcRequestBuilders.get("/imdb/filmsByYear").param("year", "1999"))
+                .andExpect(status().isOk())
+                .andReturn();
 
     }
 
     @Test
     public void controllerIntegrationTestWithoutYear() throws Exception {
 
-        MvcResult result = mockMvc.perform(
-                MockMvcRequestBuilders.get("/imdb/filmsByYear").param("year", "1221")).andExpect(status().isBadRequest()).andReturn();
+        mockMvc.perform(
+                MockMvcRequestBuilders.get("/imdb/filmsByYear").param("year", "1221"))
+                .andExpect(status().isBadRequest())
+                .andReturn();
 
     }
 

@@ -1,9 +1,7 @@
+
 package sopra.restapi.dtos;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import java.time.LocalDate;
 
@@ -11,8 +9,12 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @ToString
+@EqualsAndHashCode
 public class FilmWithHeader {
     private String streamingApp;
     private LocalDate date;
     private String filmDetails;
+
+
+
 }
