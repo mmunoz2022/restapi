@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import sopra.restapi.dtos.Film;
+import sopra.restapi.repositories.FilmsRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +18,9 @@ public class IMDBServiceImpl implements IMDBService {
 
     @Autowired
     RestTemplate restTemplate;
+
+    @Autowired
+    private FilmsRepository filmsRepository;
 
     private final String EXTERNALAPIERROR = "EXTERNAL API ERROR";
 
@@ -36,8 +40,7 @@ public class IMDBServiceImpl implements IMDBService {
 
     private List<Film> getFilmsFromExternalIMDBApi(Integer year) {
 
-        //return restTemplate.getForObject("url", List.class);
-        return new ArrayList<Film>();
+        return filmsRepository.findByYear(year);
 
 
     }

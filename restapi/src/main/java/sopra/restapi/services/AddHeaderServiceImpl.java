@@ -1,10 +1,14 @@
 package sopra.restapi.services;
 
+import com.google.gson.Gson;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import sopra.restapi.dtos.Film;
 import sopra.restapi.dtos.FilmWithHeader;
 import sopra.restapi.dtos.NetflixResponse;
+import sopra.restapi.repositories.FilmsRepository;
 
 import java.time.LocalDate;
 import java.util.Optional;
@@ -14,6 +18,7 @@ import java.util.concurrent.ExecutionException;
 
 @Service
 public class AddHeaderServiceImpl implements AddHeaderService {
+    @Autowired private FilmsRepository filmsRepository;
     /*
     Main method of the class. Cast the input to JSON, checks if is valid and process it.
      */
@@ -31,7 +36,9 @@ public class AddHeaderServiceImpl implements AddHeaderService {
         CompletableFuture<FilmWithHeader> buildFilmWithHeaderPromise = this.buildFilmWithHeaderFromJson(jsonFilm);
 
         try {
-            System.out.println("Main program keeps runnig");
+            System.out.println("Main program keeps runnig...Saving film in DB");
+            Film film = new Gson().fromJson(jsonFilm.toString(), Film.class);
+            filmsRepository.save(film);
             return (FilmWithHeader) CompletableFuture.anyOf(buildFilmWithHeaderPromise).get();
         } catch (InterruptedException e) {
             e.printStackTrace();
